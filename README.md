@@ -74,6 +74,12 @@ STRIPE_CHECKOUT_URL: "https://buy.stripe.com/test_14A3cw97l6y18at6AA6wE00";
 
 All landing page CTA buttons use that one value.
 
+Important:
+
+- Use the short reusable Stripe Payment Link in site config
+- Do **not** use or test a long URL that starts with `/c/pay/cs_test_...` in site config
+- That long URL is a one-off Checkout Session URL, not the reusable Payment Link
+
 ## Replace the PDF download URL
 
 Update `PDF_DOWNLOAD_URL` in [config.js](C:/Users/Zacharias/zacharias/config.js).
@@ -147,17 +153,18 @@ https://www.getclarityprotocol.com/success?session_id={CHECKOUT_SESSION_ID}
 
 1. Open Stripe Dashboard.
 2. Go to `Payment Links`.
-3. Open the Payment Link for **The 10-Minute Clarity Reset**.
-4. Find the `After payment` or `After the payment` setting.
-5. Change it from Stripe-hosted confirmation page to `Redirect to URL`.
-6. Set the redirect URL to:
+3. Open the Payment Link `test_14A3cw97l6y18at6AA6wE00`.
+4. Click `Edit`.
+5. Go to `After the payment`.
+6. Change it from Stripe-hosted confirmation page to `Redirect to URL`.
+7. Set the redirect URL to:
 
 ```text
 https://www.getclarityprotocol.com/success?session_id={CHECKOUT_SESSION_ID}
 ```
 
-7. Save the Payment Link.
-8. Test it in Stripe test mode.
+8. Save the Payment Link.
+9. Test it in Stripe test mode using the short Payment Link, not the long `/c/pay/cs_test_...` URL.
 
 The `/success` page is only for successful payments.
 
@@ -220,7 +227,7 @@ Then use the webhook signing secret Stripe CLI gives you as `STRIPE_WEBHOOK_SECR
 
 ## End-to-end test
 
-1. In Stripe test mode, confirm your Payment Link `After payment` setting is `Redirect to URL`.
+1. In Stripe test mode, confirm your Payment Link `test_14A3cw97l6y18at6AA6wE00` has `After the payment` set to `Redirect to URL`.
 2. Confirm the redirect URL is:
 
 ```text
@@ -228,15 +235,22 @@ https://www.getclarityprotocol.com/success?session_id={CHECKOUT_SESSION_ID}
 ```
 
 3. Open your landing page and click the checkout CTA.
-4. Complete a test payment through Stripe.
-5. Confirm you are redirected to `/success` on your site instead of staying on Stripe's hosted confirmation page.
+4. Confirm the browser opens the short Payment Link:
+
+```text
+https://buy.stripe.com/test_14A3cw97l6y18at6AA6wE00
+```
+
+5. Complete a test payment through Stripe.
+6. Confirm you are redirected to `/success` on your site instead of staying on Stripe's hosted confirmation page.
 6. Confirm the success page shows:
    - `Payment successful`
    - `Thank you for your purchase`
    - `Download the PDF`
    - `A receipt has been sent to your email`
 7. Confirm the download button opens your PDF URL.
-8. In Stripe dashboard or hosting logs, confirm the webhook was delivered successfully to:
+8. Do not manually test with a long `/c/pay/cs_test_...` URL, because that is a one-off Checkout Session URL and can bypass the normal reusable Payment Link flow.
+9. In Stripe dashboard or hosting logs, confirm the webhook was delivered successfully to:
 
 ```text
 https://www.getclarityprotocol.com/api/webhook

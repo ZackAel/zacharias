@@ -1,5 +1,6 @@
 window.APP_CONFIG = {
-  // Replace with your live Stripe Payment Link when you're ready to launch.
+  // Use the reusable Stripe Payment Link here.
+  // Do not paste a long one-off Checkout Session URL that starts with /c/pay/cs_...
   STRIPE_CHECKOUT_URL: "https://buy.stripe.com/test_14A3cw97l6y18at6AA6wE00",
 
   // Replace with the direct hosted file URL for your PDF.
