@@ -131,17 +131,37 @@ That keeps the flow simple, but it is not fully protected if someone shares the 
 
 For now, this project intentionally stays minimal and does **not** add a database, login, or account system.
 
-## Success redirect
+## Fix Stripe post-payment redirect
+
+The problem was that Stripe Payment Link was showing Stripe's own hosted success page after payment instead of sending buyers back to your site.
+
+The fix is in the Stripe dashboard, not in application code.
 
 Set your Stripe Payment Link to redirect to:
 
 ```text
-https://your-domain.com/success
+https://www.getclarityprotocol.com/success?session_id={CHECKOUT_SESSION_ID}
 ```
 
-Stripe Payment Links handle the successful payment redirect in Stripe settings, not in this codebase.
+### Exact Stripe dashboard steps
 
-If your Payment Link setup does not support a custom cancelled redirect in this flow, this project intentionally stays focused on the successful payment path only.
+1. Open Stripe Dashboard.
+2. Go to `Payment Links`.
+3. Open the Payment Link for **The 10-Minute Clarity Reset**.
+4. Find the `After payment` or `After the payment` setting.
+5. Change it from Stripe-hosted confirmation page to `Redirect to URL`.
+6. Set the redirect URL to:
+
+```text
+https://www.getclarityprotocol.com/success?session_id={CHECKOUT_SESSION_ID}
+```
+
+7. Save the Payment Link.
+8. Test it in Stripe test mode.
+
+The `/success` page is only for successful payments.
+
+The webhook remains the source of truth for payment confirmation.
 
 ## Why the webhook matters more than the redirect
 
@@ -172,7 +192,7 @@ https://your-domain.com/api/webhook
 6. In your Stripe Payment Link settings, set the success redirect to:
 
 ```text
-https://your-domain.com/success
+https://www.getclarityprotocol.com/success?session_id={CHECKOUT_SESSION_ID}
 ```
 
 7. Replace `PDF_DOWNLOAD_URL` in [config.js](C:/Users/Zacharias/zacharias/config.js) with your real hosted PDF file URL.
@@ -197,3 +217,27 @@ Then use the webhook signing secret Stripe CLI gives you as `STRIPE_WEBHOOK_SECR
 - Success page: [success/index.html](C:/Users/Zacharias/zacharias/success/index.html)
 - Success page download wiring: [success/success.js](C:/Users/Zacharias/zacharias/success/success.js)
 - Stripe webhook endpoint: [api/webhook.js](C:/Users/Zacharias/zacharias/api/webhook.js)
+
+## End-to-end test
+
+1. In Stripe test mode, confirm your Payment Link `After payment` setting is `Redirect to URL`.
+2. Confirm the redirect URL is:
+
+```text
+https://www.getclarityprotocol.com/success?session_id={CHECKOUT_SESSION_ID}
+```
+
+3. Open your landing page and click the checkout CTA.
+4. Complete a test payment through Stripe.
+5. Confirm you are redirected to `/success` on your site instead of staying on Stripe's hosted confirmation page.
+6. Confirm the success page shows:
+   - `Payment successful`
+   - `Thank you for your purchase`
+   - `Download the PDF`
+   - `A receipt has been sent to your email`
+7. Confirm the download button opens your PDF URL.
+8. In Stripe dashboard or hosting logs, confirm the webhook was delivered successfully to:
+
+```text
+https://www.getclarityprotocol.com/api/webhook
+```
