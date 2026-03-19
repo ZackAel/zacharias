@@ -1,0 +1,12 @@
+{
+  "name": "ten-minute-clarity-reset",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {
+    "node": "20.x"
+  },
+  "dependencies": {
+    "stripe": "^18.1.1"
+  }
+}
