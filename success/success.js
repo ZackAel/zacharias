@@ -3,3 +3,9 @@ document.querySelectorAll("[data-download-link]").forEach((link) => {
   link.setAttribute("href", window.APP_CONFIG.PDF_DOWNLOAD_URL);
   link.setAttribute("download", "10-Minute-Clarity-Reset.pdf");
 });
+
+document.querySelectorAll("[data-open-link]").forEach((link) => {
+  link.setAttribute("href", window.APP_CONFIG.PDF_DOWNLOAD_URL);
+  link.setAttribute("target", "_blank");
+  link.setAttribute("rel", "noopener");
+});
