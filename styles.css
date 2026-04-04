@@ -243,6 +243,13 @@ h3 {
   color: var(--muted);
 }
 
+.fast-path {
+  margin-top: 0.65rem;
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: #2a241e;
+}
+
 .tension-line {
   margin-top: 0.95rem;
   font-size: 1.05rem;
@@ -274,8 +281,8 @@ h3 {
   padding-left: 0.95rem;
   border-left: 3px solid var(--accent);
   font-weight: 800;
-  font-size: 1.12rem;
-  color: #201914;
+  font-size: 1.2rem;
+  color: #17120f;
 }
 
 .closing-line {
@@ -294,10 +301,11 @@ h3 {
 
 .interrupt-big {
   font-family: "Fraunces", serif;
-  font-size: clamp(1.8rem, 6.4vw, 2.7rem);
+  font-size: clamp(1.95rem, 6.8vw, 2.85rem);
   line-height: 1.12;
   letter-spacing: -0.02em;
-  color: #17120f;
+  color: #120e0c;
+  font-weight: 700;
 }
 
 .interrupt-small {
@@ -326,7 +334,7 @@ h3 {
   border-top: 1px solid var(--border);
   color: #302922;
   font-weight: 600;
-  line-height: 1.5;
+  line-height: 1.42;
 }
 
 .reviews-grid .review-card {
@@ -372,6 +380,77 @@ h3 {
 
 .final-panel {
   text-align: left;
+}
+
+.final-headline {
+  color: #15110e;
+  font-size: clamp(1.8rem, 6.4vw, 2.95rem);
+}
+
+.value-line {
+  margin-top: 0.85rem;
+  color: #2a231d;
+  font-weight: 600;
+}
+
+.decision-section {
+  padding-top: 4.6rem;
+  padding-bottom: 4.6rem;
+}
+
+.decision-section .container {
+  text-align: center;
+}
+
+.decision-section h2 {
+  font-size: clamp(1.95rem, 6.9vw, 3.05rem);
+}
+
+.decision-text {
+  margin-top: 1.05rem;
+  font-size: clamp(1.12rem, 3.8vw, 1.3rem);
+  line-height: 1.55;
+  color: #342c25;
+}
+
+.decision-final-line {
+  margin-top: 0.9rem;
+  font-size: clamp(1rem, 3.4vw, 1.15rem);
+  color: #201a15;
+  font-weight: 600;
+}
+
+.pre-cta-reassurance {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.pre-cta-reassurance p {
+  margin: 0;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #4a4038;
+}
+
+.final-clarity-line {
+  margin-top: 0.85rem;
+  color: #1f1914;
+  font-weight: 700;
+}
+
+.reassurance-micro {
+  color: #3f352d;
+  font-weight: 600;
+}
+
+.instant-action {
+  margin-top: 0.6rem;
+}
+
+.emphasis-one {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  color: #19130f;
 }
 
 .outcome-panel {
